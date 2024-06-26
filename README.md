@@ -7,3 +7,5 @@ session 2 - Recursion
 session 3 - Quicksort
 
 session 4 - Linked Lists
+
+session 5 - Binary Search Trees
