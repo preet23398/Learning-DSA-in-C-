@@ -1,0 +1,98 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+
+class node {
+    public:
+    int data;
+    node* next;
+} ;
+
+
+node* rotate_linked_list(node* head, int k) {
+    if (head == nullptr || k == 0)
+        return head;
+
+
+    int length = 1;
+    node* current = head;
+    while (current->next) {
+        current = current->next;
+        length++;
+    }
+
+
+    k = k % length;
+    if (k == 0)
+        return head;
+
+
+    current->next = head; // make the list circular
+
+
+    current = head;
+    for (int i = 0; i < length - k - 1; i++) {
+        current = current->next;
+    }
+
+
+    node* new_head = current->next;
+    current->next = nullptr;
+
+
+    return new_head;
+}
+
+
+int main() {
+    node* head;
+    node* one = NULL;
+    node* two = NULL;
+    node* three = NULL;
+    node* four = NULL;
+    node* five = NULL;
+
+
+    one = new node();
+    two = new node();
+    three = new node();
+    four = new node();
+    five = new node();
+
+
+    one->data = 1;
+    two->data = 2;
+    three->data = 3;
+    four->data = 4;
+    five->data = 5;
+
+
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = NULL;
+
+
+    head = one;
+    while (head != NULL) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+
+
+    int k = 2;
+    node* rotated_head = rotate_linked_list(one, k);
+
+
+    while (rotated_head) {
+        cout << rotated_head->data << " ";
+        rotated_head = rotated_head->next;
+    }
+    cout << endl;
+
+
+    return 0;
+}
