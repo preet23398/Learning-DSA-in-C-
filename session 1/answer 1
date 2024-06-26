@@ -1,0 +1,17 @@
+int main() {
+    int sort[9]={3,2,3,1,12,4,15,5,6};
+    int n=9;
+    int k = 4;
+    int x;
+    int m=n-k;
+    int i,j,min;
+
+    for (i=0;i<9;++i) {
+        for (j=9-1;j>=i+1;--j) {
+            if (sort[j]<sort[j-1]) {
+                swap(sort[j],sort[j-1]);
+            }
+        }
+    }
+
+}
