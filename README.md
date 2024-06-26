@@ -13,3 +13,7 @@ session 5 - Binary Search Trees
 session 6 - Binary Search Trees (continued)
 
 session 7 - AVL Trees
+
+session 8 - Heaps
+
+session 9 - Hashing
