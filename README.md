@@ -5,3 +5,5 @@ session 1 - Sorting
 session 2 - Recursion
 
 session 3 - Quicksort
+
+session 4 - Linked Lists
