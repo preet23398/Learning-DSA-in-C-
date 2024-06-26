@@ -1,0 +1,54 @@
+#include <iostream>
+
+using namespace std;
+
+struct treeNode {
+    int data;
+    treeNode *left;
+    treeNode *right;
+    treeNode(int x) : data(x), left(NULL), right(NULL) {}
+};
+
+class Solution {
+
+private:
+    void kthSmallest(treeNode* node, int k, int& count, int& res) {
+        if (node == nullptr) {
+            return;
+        }
+
+        kthSmallest(node->left, k, count, res);
+        count++;
+        
+        if (count == k) {
+            res = node->data;
+            return;
+        }
+
+        kthSmallest(node->right, k, count, res);
+    }
+
+public:
+    int kthSmallest(treeNode* root, int k) {
+        int count = 0;
+        int res = -1;
+
+        kthSmallest(root, k, count, res);
+        
+        return res;
+    }
+
+};
+
+int main() {
+    
+    treeNode* root = new treeNode(3);
+    root->left = new treeNode(1);
+    root->right = new treeNode(4);
+    root->left->right = new treeNode(2);
+
+    int k;
+    cin>>k;
+    Solution solution;
+    cout << solution.kthSmallest(root, k);
+}
