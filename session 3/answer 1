@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+
+int partition(int ar[], int p, int pivot) {
+    int x = ar[pivot];
+    cout << "Pivot is: " << x << endl;
+    int i = p-1;
+    for (int j=p; j<=pivot-1;++j) {
+        if (ar[j] <= x) {
+            i=i+1;
+            swap(ar[i],ar[j]);
+        }
+    }
+    swap(ar[i+1],ar[pivot]);
+    return i+1;
+}
+
+
+void quick_sort(int ar[], int p, int pivot) {
+    if (p<pivot) {
+        int q = partition(ar, p, pivot);
+        cout << "The array is: ";
+        for (int i=0; i<pivot; ++i) {
+            cout << ar[i] << " ";
+        }
+        cout << endl;
+        quick_sort(ar,p,q-1);
+        quick_sort(ar,q+1,pivot);
+    }
+}
