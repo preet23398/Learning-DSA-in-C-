@@ -29,3 +29,15 @@ void quick_sort(int ar[], int p, int pivot) {
         quick_sort(ar,q+1,pivot);
     }
 }
+
+int main() {
+    int arr[10] = {3,1,4,1,5,9,2,6,5,3};
+    quick_sort(arr,0,9);
+
+
+    cout << "The final sorted array is: ";
+    for (int i=0;i<10;++i) {
+        cout << arr[i] << " ";
+    }
+}
+
