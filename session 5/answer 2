@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+struct treeNode {
+    int data;
+    treeNode *left;
+    treeNode *right;
+    treeNode(int x) : data(x), left(NULL), right(NULL) {}
+};
+
+class Solution {
+public:
+    bool isValidBST(treeNode* root) {
+        treeNode* previous_node = nullptr;
+        return inorderTraversal(root, previous_node);
+    }
+    
+    bool inorderTraversal(treeNode* root, treeNode*& previous_node) {
+        if (root == nullptr)
+            return true;
+        
+        if (!inorderTraversal(root->left, previous_node))
+            return false;
+        
+        if (previous_node != nullptr && previous_node->data >= root->data)
+            return false;
+        
+        previous_node = root;
+        
+        return inorderTraversal(root->right, previous_node);
+    }
+};
+
+int main() {
+    Solution solution;
+    
+    treeNode* root1 = new treeNode(2);
+    root1->left = new treeNode(1);
+    root1->right = new treeNode(3);
+
+    int var = solution.isValidBST(root1);
+    if (var == 1) {
+        cout << "true";
+    }
+    else {
+        cout << "false";
+    }
+
+}
