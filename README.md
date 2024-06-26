@@ -1,4 +1,4 @@
-This repo aims at solving problems to cover all important DSA topics.
+This repo aims at solving problems to cover a few DSA topics.
 
 session 1 - Sorting
 
