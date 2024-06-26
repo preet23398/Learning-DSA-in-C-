@@ -1,0 +1,171 @@
+#include <iostream>
+using namespace std;
+
+struct treenode {
+    int key;
+    treenode* left;
+    treenode* right;
+
+    treenode(int val) : key(val), left(nullptr), right(nullptr) {}
+} ;
+
+class binary_search_tree {
+
+private:
+    treenode* root;
+
+    treenode* insertt(treenode* root, int key) {
+        if (root == nullptr) {
+            return new treenode(key);
+        }
+
+        if (key < root->key) {
+            root->left = insertt(root->left, key);
+        }
+
+        else if (key > root->key) {
+            root->right = insertt(root->right, key);
+        }
+
+        return root;
+    }
+
+    int calculateHeight(treenode* node) {
+        if (node == nullptr) {
+            return -1;
+        }
+
+        int leftHeight = calculateHeight(node->left);
+        int rightHeight = calculateHeight(node->right);
+
+        return 1 + max(leftHeight, rightHeight);
+    }
+
+    treenode* minNode(treenode* node) {
+        treenode* current=node;
+        while (current && current->left != nullptr) {
+            current=current->left;
+        }
+        return current;
+    }
+
+    treenode* deleteNode(treenode*root, int key) {
+        if (root==nullptr) {
+            return root;
+        }
+
+        if (key<root->key) {
+            root->left = deleteNode(root->left, key);
+        }
+        else if (key>root->key) {
+            root->right = deleteNode(root->right, key);
+        }
+        else {
+            if (root->left==nullptr) {
+                treenode* temp = root->right;
+                delete root;
+                return temp;
+            }
+            else if (root->right==nullptr) {
+                treenode* temp=root->left;
+                delete root;
+                return temp;
+            }
+        }
+
+        treenode* temp = minNode(root->right);
+        root->key = temp->key;
+        root->right = deleteNode(root->right, temp->key);
+
+        return root;
+    }
+
+    void inorderTraversal(treenode* root) {
+        if (root != nullptr) {
+            inorderTraversal(root->left);
+            cout << root->key << " ";
+            inorderTraversal(root->right);
+        }
+    }
+
+    void preorderTraversal(treenode* root) {
+        if (root != nullptr) {
+            cout << root->key << " ";
+            preorderTraversal(root->left);
+            preorderTraversal(root->right);
+        }
+    }
+
+    void postorderTraversal(treenode* root) {
+        if (root != nullptr) {
+            postorderTraversal(root->left);
+            postorderTraversal(root->right);
+            cout << root->key << " ";
+        }
+    }
+
+
+public: 
+    binary_search_tree() : root(nullptr) {}
+
+    void insert(int key) {
+        root = insertt(root,key);
+    }
+
+    void deleteNode(int key) {
+        root = deleteNode(root,key);
+    }
+
+    void printInorder() {
+        cout << "Inorder traversal: ";
+        inorderTraversal(root);
+        cout << endl;
+    }
+
+    void printPreorder() {
+        cout << "Preorder traversal: ";
+        preorderTraversal(root);
+        cout << endl;
+    }
+
+    void printPostorder() {
+        cout << "Postorder traversal: ";
+        postorderTraversal(root);
+        cout << endl;
+    }
+
+    int height() {
+        return calculateHeight(root);
+    }
+
+};
+
+int main() {
+    binary_search_tree bst;
+    int count=0;
+    bst.insert(5);
+    count+=1;
+    bst.insert(3);
+    count+=1;
+    bst.insert(7);
+    count+=1;
+    bst.insert(2);
+    count+=1;
+    bst.insert(4);
+    count+=1;
+    bst.insert(6);
+    count+=1;
+    bst.insert(8);
+    count+=1;
+    
+    bst.deleteNode(8);
+    count-=1;
+
+    bst.printInorder();
+    bst.printPreorder();
+    bst.printPostorder();
+
+    cout<<"Number of nodes: " << count << endl;
+
+    cout << "Height of the tree: " << bst.height() << endl;
+}
