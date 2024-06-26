@@ -1,0 +1,176 @@
+#include <iostream>
+using namespace std;
+
+
+struct node {
+    int data;
+    node* next;
+};
+
+
+class openHash {
+public:
+    int* table;
+    int capacity;
+
+
+    //function
+    int hash(int key) {
+        return key%capacity;
+    }
+
+
+    openHash(int size) : capacity(size) {
+        table = new int[capacity];
+        for (int i=0;i<capacity;i++) {
+            table[i]=-1; //intializing the table with -1
+        }
+    }
+
+
+    void insert(int key) {
+        int index = hash(key);
+
+
+        while (table[index] != -1) {
+            index = (index + 1) % capacity;
+        }
+
+
+        table[index] = key;
+    }
+
+
+    bool search(int key) {
+        int index = hash(key);
+
+
+        while (table[index] != -1) {
+            if (table[index] == key) {
+                return true;
+            }
+            index = (index + 1) % capacity;
+        }
+
+
+        return false;
+    }
+
+
+    void deleted(int key) {
+        int index = hash(key);
+
+
+        while (table[index] != -1) {
+            if (table[index] == key) {
+            table[index] = -2;
+            return;
+        }
+        index = (index + 1) % capacity;
+    }
+
+
+        cout << "Key not found" << endl;
+    }
+};
+
+
+class closedHash {
+    public:
+    node** table;
+    int capacity;;
+
+
+    //function
+    int hash(int key) {
+        return key%capacity;
+    }
+
+
+    closedHash(int size) : capacity(size) {
+        table = new node*[capacity]();
+    }
+
+
+    void insert(int key) {
+        int index = hash(key);
+
+
+        node* newnode = new node;
+        newnode->data = key;
+        newnode->next = table[index];
+        table[index] = newnode;
+    }
+
+
+    bool search(int key) {
+        int index = hash(key);
+
+
+        node* current = table[index];
+        while (current != nullptr) {
+            if (current->data == key) {
+                return true;
+            }
+            current = current->next;
+        }
+
+
+        return false;
+    }
+
+
+    void deleted(int key) {
+    int index = hash(key);
+
+
+    node* current = table[index];
+    node* prev = nullptr;
+
+
+    while (current != nullptr) {
+      if (current->data == key) {
+        if (prev == nullptr) {
+          table[index] = current->next;
+        } else {
+          prev->next = current->next;
+        }
+        delete current;
+        return;
+      }
+      prev = current;
+      current = current->next;
+    }
+
+
+    cout << "Key not found" << endl;
+  }
+
+
+
+
+};
+
+
+int main() {
+    //open
+    openHash openTable(10);
+    openTable.insert(5);
+    openTable.insert(15);
+    openTable.insert(25);
+    cout << "Key 15 " << (openTable.search(15)) << endl;
+    openTable.deleted(15);
+    cout << "Key 15 " << (openTable.search(15)) << endl;
+
+
+    //closed
+    closedHash closedTable(10);
+    closedTable.insert(5);
+    closedTable.insert(15);
+    closedTable.insert(25);
+    cout << "Key 15 " << (closedTable.search(15)) << endl;
+    closedTable.deleted(15);
+    cout << "Key 15 " << (closedTable.search(15)) << endl;
+
+
+}
