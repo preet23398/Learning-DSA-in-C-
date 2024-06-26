@@ -9,3 +9,5 @@ session 3 - Quicksort
 session 4 - Linked Lists
 
 session 5 - Binary Search Trees
+
+session 6 - Binary Search Trees (continued)
